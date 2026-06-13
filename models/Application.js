@@ -14,6 +14,26 @@ const applicationSchema = new mongoose.Schema(
       required: true,
     },
 
+    resumeUrl: {
+      type: String,
+      default: "",
+    },
+
+    resumeName: {
+  type: String,
+  default: "",
+},
+
+    resumePublicId: {
+      type: String,
+      default: "",
+    },
+
+    coverLetter: {
+      type: String,
+      default: "",
+    },
+
     status: {
       type: String,
       enum: [
@@ -26,6 +46,16 @@ const applicationSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+  }
+);
+
+applicationSchema.index(
+  {
+    projectId: 1,
+    applicantId: 1
+  },
+  {
+    unique: true
   }
 );
 

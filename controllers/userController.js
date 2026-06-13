@@ -70,3 +70,41 @@ export const getProfile = async (req, res) => {
 
   }
 };
+
+export const completeProfile = async (
+  req,
+  res
+) => {
+  try {
+
+    const {
+      phone,
+      bio,
+      skills,
+      github,
+      linkedin,
+      portfolio
+    } = req.body;
+
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        phone,
+        bio,
+        skills,
+        github,
+        linkedin,
+        portfolio,
+        profileCompleted: true
+      },
+      { new: true }
+    );
+
+    res.status(200).json(user);
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    });
+  }
+};

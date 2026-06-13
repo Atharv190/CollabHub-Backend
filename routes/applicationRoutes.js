@@ -1,13 +1,16 @@
 import express from "express";
 
 import protect from "../middleware/authMiddleware.js";
+import { upload } from "../middleware/uploadMiddleware.js";
 
 import {
   applyToProject,
   getProjectApplicants,
   acceptApplication,
   rejectApplication,
-  getMyApplications
+  getMyApplications,
+  viewResume,
+  downloadResume
 } from "../controllers/applicationController.js";
 
 const router = express.Router();
@@ -15,6 +18,7 @@ const router = express.Router();
 router.post(
   "/:projectId",
   protect,
+  upload.single("resume"),
   applyToProject
 );
 
@@ -40,6 +44,18 @@ router.get(
   "/my",
   protect,
   getMyApplications
+);
+
+router.get(
+  "/resume/view/:applicationId",
+  protect,
+  viewResume
+);
+
+router.get(
+  "/resume/download/:applicationId",
+  protect,
+  downloadResume
 );
 
 export default router;
